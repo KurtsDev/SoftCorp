@@ -1,0 +1,39 @@
+#category  {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+
+#category .name {
+    display: flex;
+    width: 330px;
+}
+
+#category .item {
+    display: flex;
+    padding: 10px;
+}
+
+#category .price {
+    padding-left: 30px;
+    width: 30px;
+}
+
+.name-category {
+    border: 1px solid black;
+    padding: 5px;
+    background-color: aquamarine;
+}
+
+.name-category .item .name {
+
+    background-color: #fff;
+}
+
+.name-category .item .price {
+padding: 10px;
+    background-color: gray;
+}
+
+
