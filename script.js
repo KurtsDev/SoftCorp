@@ -106,7 +106,7 @@ function buy(e) {
     let productName = e.currentTarget.getAttribute('productName');
     let productPrice = e.currentTarget.getAttribute('productPrice');
     let left = e.currentTarget.getAttribute('left');
-    let quantity = 0;
+    let quantity = 1;
 
     if (!buyList[category]) {
         buyList[category] = [];
@@ -119,23 +119,61 @@ function buy(e) {
         Q: quantity,
     };
 
-    buyList2 = [];
-
-
-
-    for (let [key, value] of Object.entries(buyList)) {
-
-        value.
-
-
+    for (let [key, value] of Object.entries(buyList[category])) {
+        if (value.N === productObj.N) {
+            value.Q++;
+            productObj.Z = true;
+        }
     }
-
-
-
 
     buyList[category].push(productObj);
 
+    console.log(buyList);
+
+
+
+
     drawingCart(buyList);
+
+
+}
+
+function del(e) {
+
+    let category = e.currentTarget.getAttribute('category');
+    let productName = e.currentTarget.getAttribute('productName');
+    let productPrice = e.currentTarget.getAttribute('productPrice');
+    let left = e.currentTarget.getAttribute('left');
+    let quantity = 1;
+
+    if (!buyList[category]) {
+        buyList[category] = [];
+    }
+
+    let productObj =  {
+        N: productName,
+        C: productPrice,
+        P: left,
+        Q: quantity,
+    };
+
+    for (let [key, value] of Object.entries(buyList[category])) {
+        if (value.N === productObj.N) {
+            value.Q--;
+            productObj.Z = true;
+        }
+    }
+
+    buyList[category].push(productObj);
+
+    console.log(buyList);
+
+
+
+
+    drawingCart(buyList);
+
+
 
 
 }
@@ -143,9 +181,14 @@ function buy(e) {
 
 
 function drawingCart(obj) {
+
+
+
     let divCategoryWrap = document.getElementById('cartwrap');
     divCategoryWrap.innerHTML = '';
-    for (let [key, value] of Object.entries(obj)) {
+     for (let [key, value] of Object.entries(obj)) {
+
+
 
 
 
@@ -160,7 +203,17 @@ function drawingCart(obj) {
         divCategory.append(nameCategory);
         nameCategory.appendChild(document.createTextNode(key));
 
-        for (let i = 0; i < value.length; i++) {
+
+         let total = 0;
+         qqq: for (let i = 0; i < value.length; i++) {
+
+
+            if (value[i].Z) continue qqq;
+
+            if (value[i].Q < 1)  divItem.innerHTML = '';
+
+             total = +total + (+ value[i].C * + value[i].Q);
+
 
             let divItem = document.createElement('div',);
             divItem.className = 'item';
@@ -168,7 +221,7 @@ function drawingCart(obj) {
             divItem.setAttribute('productName', value[i].N);
             divItem.setAttribute('productPrice', value[i].C);
             divItem.setAttribute('left', value[i].P);
-            divItem.addEventListener('click', buy);
+            divItem.addEventListener('click', del);
             nameCategory.append(divItem);
 
             let divName = document.createElement('div',);
@@ -191,6 +244,15 @@ function drawingCart(obj) {
 
             divPrice.appendChild(document.createTextNode(convertUSD(value[i].C)));
         }
+
+         let divTotal = document.createElement('div',);
+         divTotal.className = 'total';
+         divCategory.append(divTotal);
+
+         divTotal.appendChild(document.createTextNode('Общая стоймость - ' + total));
+
+
+         console.log(total);
     }
 }
 
