@@ -4,17 +4,14 @@ export default {
 
     actions: {
         initProductList({commit}) {
-            axios.get ('http://localhost:8080/data.json'). then (response => {
+            axios.get('http://localhost:8080/data.json').then(response => {
                 commit('setGoods', response.data.Value.Goods);
-
             })
         },
 
         initNamesList({commit}) {
-            axios.get ('http://localhost:8080/names.json'). then (response => {
+            axios.get('http://localhost:8080/names.json').then(response => {
                 commit('setNames', response.data);
-
-
             })
         }
     },
@@ -33,16 +30,12 @@ export default {
         getNames(state) {
             return state.names;
         },
+        applyCourseGetter(state, getters, rootState) {
+            return rootState.course.course;
+        },
 
-
-        // getNamesArr(state) {
-        //     let names = state.names;
-        //
-        //     names.forEach(function (value,key ) {
-        //         return value
-        //     })
-        // }
-
-
+        colorColumn(state, getters, rootState) {
+            return rootState.course.color;
+        },
     },
 }
